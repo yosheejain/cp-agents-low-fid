@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output — dist/ IS committed so cPanel can deploy without Node.js
+# Run `npm run build` locally before every commit.
+
+# SQLite database (contains all user data and conversations)
+db/chat.db
+db/*.db
+
+# PHP config with API key and admin password
+api/config.php
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp

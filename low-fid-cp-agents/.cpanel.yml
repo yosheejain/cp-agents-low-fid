@@ -1,0 +1,21 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/public_html
+
+    # ── React built files ───────────────────────────────────────────────────────
+    - /bin/cp -r dist/. $DEPLOYPATH/
+
+    # ── PHP API files (skips config.php — upload that manually once) ────────────
+    - /bin/mkdir -p $DEPLOYPATH/api
+    - /usr/bin/rsync -av --exclude='config.php' api/ $DEPLOYPATH/api/
+
+    # ── System prompt (safe to overwrite anytime) ───────────────────────────────
+    - /bin/mkdir -p $DEPLOYPATH/prompts
+    - /bin/cp prompts/system_prompt.txt $DEPLOYPATH/prompts/system_prompt.txt
+    - /bin/cp prompts/.htaccess $DEPLOYPATH/prompts/.htaccess
+
+    # ── SQLite db directory (just needs to exist and be writable) ───────────────
+    - /bin/mkdir -p $DEPLOYPATH/db
+    - /bin/cp db/.htaccess $DEPLOYPATH/db/.htaccess
+    - /bin/chmod 755 $DEPLOYPATH/db
