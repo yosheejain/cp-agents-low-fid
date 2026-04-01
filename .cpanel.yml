@@ -1,0 +1,22 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/public_html
+    - export APPDIR=$HOME/repositories/cp-agents-low-fid/low-fid-cp-agents
+
+    # ── React built files ───────────────────────────────────────────────────────
+    - /bin/cp -r $APPDIR/dist/. $DEPLOYPATH/
+
+    # ── PHP API files (skips config.php — upload that manually once) ────────────
+    - /bin/mkdir -p $DEPLOYPATH/api
+    - /usr/bin/rsync -av --exclude='config.php' $APPDIR/api/ $DEPLOYPATH/api/
+
+    # ── System prompt ───────────────────────────────────────────────────────────
+    - /bin/mkdir -p $DEPLOYPATH/prompts
+    - /bin/cp $APPDIR/prompts/system_prompt.txt $DEPLOYPATH/prompts/system_prompt.txt
+    - /bin/cp $APPDIR/prompts/.htaccess $DEPLOYPATH/prompts/.htaccess
+
+    # ── SQLite db directory ─────────────────────────────────────────────────────
+    - /bin/mkdir -p $DEPLOYPATH/db
+    - /bin/cp $APPDIR/db/.htaccess $DEPLOYPATH/db/.htaccess
+    - /bin/chmod 755 $DEPLOYPATH/db
