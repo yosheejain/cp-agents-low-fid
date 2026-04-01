@@ -1,22 +1,15 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=$HOME/public_html
-    - export APPDIR=$HOME/repositories/cp-agents-low-fid/low-fid-cp-agents
-
-    # ── React built files ───────────────────────────────────────────────────────
-    - /bin/cp -r $APPDIR/dist/. $DEPLOYPATH/
-
-    # ── PHP API files (skips config.php — upload that manually once) ────────────
-    - /bin/mkdir -p $DEPLOYPATH/api
-    - /usr/bin/rsync -av --exclude='config.php' $APPDIR/api/ $DEPLOYPATH/api/
-
-    # ── System prompt ───────────────────────────────────────────────────────────
-    - /bin/mkdir -p $DEPLOYPATH/prompts
-    - /bin/cp $APPDIR/prompts/system_prompt.txt $DEPLOYPATH/prompts/system_prompt.txt
-    - /bin/cp $APPDIR/prompts/.htaccess $DEPLOYPATH/prompts/.htaccess
-
-    # ── SQLite db directory ─────────────────────────────────────────────────────
-    - /bin/mkdir -p $DEPLOYPATH/db
-    - /bin/cp $APPDIR/db/.htaccess $DEPLOYPATH/db/.htaccess
-    - /bin/chmod 755 $DEPLOYPATH/db
+    - /bin/mkdir -p /home/lowfidtool/public_html/api
+    - /bin/mkdir -p /home/lowfidtool/public_html/prompts
+    - /bin/mkdir -p /home/lowfidtool/public_html/db
+    - /bin/cp -r /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/dist/. /home/lowfidtool/public_html/
+    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/auth.php /home/lowfidtool/public_html/api/auth.php
+    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/chat.php /home/lowfidtool/public_html/api/chat.php
+    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/conversations.php /home/lowfidtool/public_html/api/conversations.php
+    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/users.php /home/lowfidtool/public_html/api/users.php
+    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/prompts/system_prompt.txt /home/lowfidtool/public_html/prompts/system_prompt.txt
+    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/prompts/.htaccess /home/lowfidtool/public_html/prompts/.htaccess
+    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/db/.htaccess /home/lowfidtool/public_html/db/.htaccess
+    - /bin/chmod 755 /home/lowfidtool/public_html/db
