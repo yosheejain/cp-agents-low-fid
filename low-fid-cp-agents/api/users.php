@@ -15,7 +15,7 @@ $db = getDB();
 // ── List users ────────────────────────────────────────────────────────────────
 if ($action === 'list') {
     $stmt = $db->query(
-        'SELECT id, username, is_admin, created_at
+        'SELECT id, username, is_admin, group_id, created_at
          FROM users
          ORDER BY created_at DESC'
     );
@@ -27,6 +27,7 @@ if ($action === 'create') {
     $username = trim($body['username'] ?? '');
     $password = $body['password'] ?? '';
     $isAdmin  = !empty($body['is_admin']) ? 1 : 0;
+    $groupId  = in_array((int)($body['group_id'] ?? 1), [1, 2]) ? (int)$body['group_id'] : 1;
 
     if (!$username || !$password) {
         jsonResponse(['error' => 'Username and password are required.'], 400);
@@ -41,9 +42,9 @@ if ($action === 'create') {
     $hash = password_hash($password, PASSWORD_BCRYPT);
     try {
         $stmt = $db->prepare(
-            'INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, ?)'
+            'INSERT INTO users (username, password_hash, is_admin, group_id) VALUES (?, ?, ?, ?)'
         );
-        $stmt->execute([$username, $hash, $isAdmin]);
+        $stmt->execute([$username, $hash, $isAdmin, $groupId]);
         jsonResponse(['success' => true, 'id' => (int) $db->lastInsertId()]);
     } catch (PDOException $e) {
         if ((string) $e->getCode() === '23000') {

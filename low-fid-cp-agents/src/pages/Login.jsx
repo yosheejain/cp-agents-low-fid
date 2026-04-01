@@ -21,6 +21,7 @@ export default function Login() {
   const [newUsername, setNewUsername] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newIsAdmin, setNewIsAdmin] = useState(false)
+  const [newGroup, setNewGroup] = useState(1)
   const [addMsg, setAddMsg] = useState({ type: '', text: '' })
   const [usersLoading, setUsersLoading] = useState(false)
 
@@ -71,11 +72,11 @@ export default function Login() {
     try {
       const res = await axios.post(`${RAW_API}/users.php`, {
         action: 'create', admin_password: adminPw,
-        username: newUsername, password: newPassword, is_admin: newIsAdmin,
+        username: newUsername, password: newPassword, is_admin: newIsAdmin, group_id: newGroup,
       })
       if (res.data.success) {
         setAddMsg({ type: 'ok', text: 'User created.' })
-        setNewUsername(''); setNewPassword(''); setNewIsAdmin(false)
+        setNewUsername(''); setNewPassword(''); setNewIsAdmin(false); setNewGroup(1)
         fetchUsers()
       } else {
         setAddMsg({ type: 'err', text: res.data.error || 'Failed to create user' })
@@ -173,6 +174,13 @@ export default function Login() {
                   <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Add New User</h3>
                   <input type="text" value={newUsername} onChange={e => setNewUsername(e.target.value)} className={inputCls} placeholder="Username" required />
                   <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} className={inputCls} placeholder="Password" required />
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Group</label>
+                    <select value={newGroup} onChange={e => setNewGroup(parseInt(e.target.value))} className={inputCls}>
+                      <option value={1}>Group 1</option>
+                      <option value={2}>Group 2</option>
+                    </select>
+                  </div>
                   <label className="flex items-center gap-2 text-slate-500 text-sm cursor-pointer select-none">
                     <input type="checkbox" checked={newIsAdmin} onChange={e => setNewIsAdmin(e.target.checked)} className="rounded accent-green-500" />
                     Admin privileges
@@ -192,6 +200,7 @@ export default function Login() {
                         <div key={u.id} className="flex items-center justify-between bg-green-50 border border-green-100 rounded-lg px-3 py-2">
                           <div className="flex items-center gap-2">
                             <span className="text-slate-700 text-sm font-medium">{u.username}</span>
+                            <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-1.5 py-0.5 rounded">G{u.group_id ?? 1}</span>
                             {u.is_admin ? <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-1.5 py-0.5 rounded">admin</span> : null}
                           </div>
                           <button onClick={() => handleDeleteUser(u.id, u.username)} className="text-red-400 hover:text-red-600 hover:bg-red-50 p-1 rounded transition-colors" title="Delete">

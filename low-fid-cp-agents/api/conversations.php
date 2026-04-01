@@ -37,8 +37,11 @@ if ($action === 'list') {
     if ($role)  { $sql .= ' AND c.role  = ?'; $params[] = $role; }
     if ($topic) { $sql .= ' AND c.topic = ?'; $params[] = $topic; }
 
-    // Only show conversations that have at least one real message
+    // Only show conversations with at least one real message
     $sql .= ' AND (SELECT COUNT(*) FROM messages m WHERE m.conversation_id = c.id AND m.role IN ("user","assistant")) > 0';
+    // Only show conversations from users in the same group as the logged-in user
+    $sql .= ' AND u.group_id = (SELECT group_id FROM users WHERE id = ?)';
+    $params[] = $user['id'];
     $sql .= ' ORDER BY c.started_at DESC';
 
     $stmt = $db->prepare($sql);

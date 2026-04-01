@@ -22,7 +22,7 @@ if ($action === 'create_conversation') {
     $stmt->execute([$user['id'], $role, $topic]);
     $convId = (int) $db->lastInsertId();
 
-    // Build system prompt from file; substitute placeholders
+    // Build system prompt from base file; substitute placeholders
     $promptTemplate = file_exists(PROMPT_FILE)
         ? file_get_contents(PROMPT_FILE)
         : 'You are a helpful AI assistant.';
@@ -32,6 +32,12 @@ if ($action === 'create_conversation') {
         [$role, $topic, $user['username']],
         $promptTemplate
     );
+
+    // Append role-specific prompt if one exists for this role
+    $rolePromptFile = dirname(PROMPT_FILE) . '/roles/' . preg_replace('/[^a-z0-9_]/', '', strtolower($role)) . '.txt';
+    if (file_exists($rolePromptFile)) {
+        $systemPrompt .= "\n\n" . trim(file_get_contents($rolePromptFile));
+    }
 
     // Log system message (not shown to user in UI but included in API calls)
     $db->prepare(

@@ -36,6 +36,7 @@ if ($action === 'login') {
         'token'    => $token,
         'user_id'  => $user['id'],
         'is_admin' => (bool) $user['is_admin'],
+        'group_id' => (int) ($user['group_id'] ?? 1),
     ]);
 }
 

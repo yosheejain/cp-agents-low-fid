@@ -1,20 +1,27 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { GraduationCap, BookOpen, FlaskConical, Briefcase, Globe } from 'lucide-react'
+import { GraduationCap, BookOpen, FlaskConical, Briefcase, Globe, Computer, PanelLeftOpen } from 'lucide-react'
 
-// ── Edit roles here ────────────────────────────────────────────────────────────
-const ROLES = [
-  { id: 'student',      label: 'Student',       description: 'Learning, exploring concepts, homework help', Icon: GraduationCap },
-  { id: 'instructor',   label: 'Instructor',    description: 'Creating course material, lesson planning',  Icon: BookOpen      },
-  { id: 'researcher',   label: 'Researcher',    description: 'Deep analysis, literature review',           Icon: FlaskConical  },
-  { id: 'professional', label: 'Professional',  description: 'Practical workplace applications',           Icon: Briefcase     },
-  { id: 'general',      label: 'General User',  description: 'Open-ended general purpose assistance',      Icon: Globe         },
-]
+// ── Edit group display names here ──────────────────────────────────────────────
+const GROUP_NAMES = { 1: 'Group 1', 2: 'Group 2' }
+
+// ── Edit roles per group here ──────────────────────────────────────────────────
+const ROLES_BY_GROUP = {
+  1: [
+    { id: 'designer',      label: 'Designer',       description: 'Designing to supply to implementation team.', Icon: PanelLeftOpen },
+  ],
+  2: [
+    { id: 'software_engineer',      label: 'Software Engineer',       description: 'Developing software', Icon: Computer },
+  ],
+}
 // ──────────────────────────────────────────────────────────────────────────────
 
 export default function RoleSelect() {
   const { role, selectRole, user, logout } = useAuth()
   const navigate = useNavigate()
+
+  const group = user?.group ?? 1
+  const roles = ROLES_BY_GROUP[group] ?? ROLES_BY_GROUP[1]
 
   const handleSelect = (id) => { selectRole(id); navigate('/topic') }
 
@@ -23,7 +30,12 @@ export default function RoleSelect() {
       <div className="max-w-3xl mx-auto">
         <div className="flex items-start justify-between mb-10">
           <div>
-            <p className="text-green-500 text-xs font-semibold uppercase tracking-wider mb-1">Step 1 of 2</p>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-green-500 text-xs font-semibold uppercase tracking-wider">Step 1 of 2</p>
+              <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium">
+                {GROUP_NAMES[group]}
+              </span>
+            </div>
             <h1 className="text-2xl font-bold text-slate-800">Select Interaction Role</h1>
             <p className="text-slate-400 mt-1 text-sm">
               Hi <span className="text-slate-600 font-medium">{user?.username}</span> — who do you want to talk to today?
@@ -40,7 +52,7 @@ export default function RoleSelect() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {ROLES.map(({ id, label, description, Icon }) => {
+          {roles.map(({ id, label, description, Icon }) => {
             const selected = role === id
             return (
               <button

@@ -26,6 +26,7 @@ export function AuthProvider({ children }) {
           token: res.data.token,
           id: res.data.user_id,
           is_admin: res.data.is_admin,
+          group: res.data.group_id ?? 1,
         }
         setUser(userData)
         localStorage.setItem('chatapp_user', JSON.stringify(userData))

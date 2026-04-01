@@ -16,5 +16,7 @@ deployment:
     - /bin/cp $REPOPATH/api/config.example.php $DEPLOYPATH/api/config.example.php
     - /bin/cp $REPOPATH/prompts/system_prompt.txt $DEPLOYPATH/prompts/system_prompt.txt
     - /bin/cp $REPOPATH/prompts/.htaccess $DEPLOYPATH/prompts/.htaccess
+    - /bin/mkdir -p $DEPLOYPATH/prompts/roles
+    - /bin/cp -R $REPOPATH/prompts/roles $DEPLOYPATH/prompts/
     - /bin/cp $REPOPATH/db/.htaccess $DEPLOYPATH/db/.htaccess
     - /bin/chmod 755 $DEPLOYPATH/db
