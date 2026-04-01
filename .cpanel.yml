@@ -1,15 +1,20 @@
 ---
 deployment:
   tasks:
-    - /bin/mkdir -p /home/lowfidtool/public_html/api
-    - /bin/mkdir -p /home/lowfidtool/public_html/prompts
-    - /bin/mkdir -p /home/lowfidtool/public_html/db
-    - /bin/cp -r /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/dist/. /home/lowfidtool/public_html/
-    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/auth.php /home/lowfidtool/public_html/api/auth.php
-    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/chat.php /home/lowfidtool/public_html/api/chat.php
-    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/conversations.php /home/lowfidtool/public_html/api/conversations.php
-    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/api/users.php /home/lowfidtool/public_html/api/users.php
-    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/prompts/system_prompt.txt /home/lowfidtool/public_html/prompts/system_prompt.txt
-    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/prompts/.htaccess /home/lowfidtool/public_html/prompts/.htaccess
-    - /bin/cp /home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents/db/.htaccess /home/lowfidtool/public_html/db/.htaccess
-    - /bin/chmod 755 /home/lowfidtool/public_html/db
+    - export DEPLOYPATH=/home/lowfidtool/public_html
+    - export REPOPATH=/home/lowfidtool/repositories/cp-agents-low-fid/low-fid-cp-agents
+    - /bin/mkdir -p $DEPLOYPATH/api
+    - /bin/mkdir -p $DEPLOYPATH/prompts
+    - /bin/mkdir -p $DEPLOYPATH/db
+    - /bin/cp $REPOPATH/dist/index.html $DEPLOYPATH/index.html
+    - /bin/cp $REPOPATH/dist/.htaccess $DEPLOYPATH/.htaccess
+    - /bin/cp -R $REPOPATH/dist/assets $DEPLOYPATH/
+    - /bin/cp $REPOPATH/api/auth.php $DEPLOYPATH/api/auth.php
+    - /bin/cp $REPOPATH/api/chat.php $DEPLOYPATH/api/chat.php
+    - /bin/cp $REPOPATH/api/conversations.php $DEPLOYPATH/api/conversations.php
+    - /bin/cp $REPOPATH/api/users.php $DEPLOYPATH/api/users.php
+    - /bin/cp $REPOPATH/api/config.example.php $DEPLOYPATH/api/config.example.php
+    - /bin/cp $REPOPATH/prompts/system_prompt.txt $DEPLOYPATH/prompts/system_prompt.txt
+    - /bin/cp $REPOPATH/prompts/.htaccess $DEPLOYPATH/prompts/.htaccess
+    - /bin/cp $REPOPATH/db/.htaccess $DEPLOYPATH/db/.htaccess
+    - /bin/chmod 755 $DEPLOYPATH/db
