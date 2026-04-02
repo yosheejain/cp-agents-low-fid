@@ -81,6 +81,9 @@ export default function Chat() {
     try {
       const res = await api.post('/chat.php', { action: 'create_conversation', role, topic, user_role: userRole })
       setConversationId(res.data.conversation_id)
+      if (res.data.opening_message) {
+        setMessages([{ role: 'assistant', content: res.data.opening_message }])
+      }
     } catch {
       setError('Failed to start conversation. Check your PHP server and config.')
     } finally {
