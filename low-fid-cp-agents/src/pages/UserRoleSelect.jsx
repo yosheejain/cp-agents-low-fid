@@ -10,13 +10,11 @@ const USER_ROLES_BY_GROUP = {
   1: [
     { id: 'data_scientist',      label: 'Data Scientist',       description: '',           Icon: GraduationCap },
     { id: 'software_engineer',      label: 'Software Engineer',       description: '',           Icon: GraduationCap },
+
   ],
   2: [
-    { id: 'student',      label: 'Student',       description: 'I am learning or studying this topic',           Icon: GraduationCap },
-    { id: 'instructor',   label: 'Instructor',    description: 'I teach or create material on this topic',       Icon: BookOpen      },
-    { id: 'researcher',   label: 'Researcher',    description: 'I conduct research or analysis on this topic',   Icon: FlaskConical  },
-    { id: 'professional', label: 'Professional',  description: 'I apply this topic in a workplace context',      Icon: Briefcase     },
-    { id: 'general',      label: 'General User',  description: 'I am exploring this topic without a set agenda', Icon: Globe         },
+    { id: 'data_scientist',      label: 'Data Scientist',       description: '',           Icon: GraduationCap },
+    { id: 'software_engineer',      label: 'Software Engineer',       description: '',           Icon: GraduationCap },
   ],
 }
 // ──────────────────────────────────────────────────────────────────────────────
