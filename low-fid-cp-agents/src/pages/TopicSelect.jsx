@@ -8,11 +8,7 @@ const GROUP_NAMES = { 1: 'Group 1', 2: 'Group 2' }
 // ── Edit topics per group here ─────────────────────────────────────────────────
 const TOPICS_BY_GROUP = {
   1: [
-    { id: 'privacy_and_security', label: 'Security & Privacy',      description: '',    Icon: Code2          },
-    { id: 'llm', label: 'Large Language Models',       description: '',    Icon: Code2          },
-    { id: 'ai', label: 'Artificial Intelligence',       description: '',    Icon: Code2          },
-    { id: 'ml', label: 'Machine Learning',       description: '',    Icon: Code2          },
-    { id: 'comp_arch', label: 'Computer Architecture',       description: '',    Icon: Code2          },
+    { id: 'web_dev', label: 'Web Development',      description: '',    Icon: Code2          },
   ],
   2: [
     { id: 'llm', label: 'LLM',       description: 'Talks about databases and their use in software development',    Icon: Code2          },

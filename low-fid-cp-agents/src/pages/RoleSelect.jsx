@@ -9,7 +9,6 @@ const GROUP_NAMES = { 1: 'Group 1', 2: 'Group 2' }
 const ROLES_BY_GROUP = {
   1: [
     { id: 'designer',      label: 'Designer',       description: '', Icon: PanelLeftOpen },
-    { id: 'product_manager',      label: 'Product Manager',       description: '', Icon: PanelLeftOpen },
   ],
   2: [
     { id: 'software_engineer',      label: 'Software Engineer',       description: 'Developing software', Icon: Computer },

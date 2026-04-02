@@ -8,7 +8,6 @@ const GROUP_NAMES = { 1: 'Group 1', 2: 'Group 2' }
 // ── Edit user roles per group here ────────────────────────────────────────────
 const USER_ROLES_BY_GROUP = {
   1: [
-    { id: 'data_scientist',      label: 'Data Scientist',       description: '',           Icon: GraduationCap },
     { id: 'software_engineer',      label: 'Software Engineer',       description: '',           Icon: GraduationCap },
 
   ],
