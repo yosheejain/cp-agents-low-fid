@@ -8,8 +8,9 @@ $action = $body['action'] ?? '';
 
 // ── Create conversation ───────────────────────────────────────────────────────
 if ($action === 'create_conversation') {
-    $role  = trim($body['role']  ?? '');
-    $topic = trim($body['topic'] ?? '');
+    $role     = trim($body['role']      ?? '');
+    $topic    = trim($body['topic']     ?? '');
+    $userRole = trim($body['user_role'] ?? '');
 
     if (!$role || !$topic) {
         jsonResponse(['error' => 'Role and topic are required.'], 400);
@@ -17,9 +18,9 @@ if ($action === 'create_conversation') {
 
     // Insert conversation row
     $stmt = $db->prepare(
-        'INSERT INTO conversations (user_id, role, topic) VALUES (?, ?, ?)'
+        'INSERT INTO conversations (user_id, role, topic, user_role) VALUES (?, ?, ?, ?)'
     );
-    $stmt->execute([$user['id'], $role, $topic]);
+    $stmt->execute([$user['id'], $role, $topic, $userRole ?: null]);
     $convId = (int) $db->lastInsertId();
 
     // Build system prompt from base file; substitute placeholders
@@ -28,8 +29,8 @@ if ($action === 'create_conversation') {
         : 'You are a helpful AI assistant.';
 
     $systemPrompt = str_replace(
-        ['{role}', '{topic}', '{username}'],
-        [$role, $topic, $user['username']],
+        ['{role}', '{topic}', '{username}', '{user_role}'],
+        [$role, $topic, $user['username'], $userRole ?: 'general user'],
         $promptTemplate
     );
 

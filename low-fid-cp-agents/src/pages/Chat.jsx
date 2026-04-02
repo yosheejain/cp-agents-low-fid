@@ -54,7 +54,7 @@ const ROLE_LABELS  = { student: 'Student', instructor: 'Instructor', researcher:
 const TOPIC_LABELS = { computer_science: 'Computer Science', mathematics: 'Mathematics', writing: 'Writing & Literature', science: 'Science', history: 'History', arts: 'Arts & Humanities', communication: 'Communication', general: 'General' }
 
 export default function Chat() {
-  const { role, topic, user, logout } = useAuth()
+  const { role, topic, userRole, user, logout } = useAuth()
   const navigate = useNavigate()
 
   const [conversationId, setConversationId] = useState(null)
@@ -79,7 +79,7 @@ export default function Chat() {
 
   const createConversation = async () => {
     try {
-      const res = await api.post('/chat.php', { action: 'create_conversation', role, topic })
+      const res = await api.post('/chat.php', { action: 'create_conversation', role, topic, user_role: userRole })
       setConversationId(res.data.conversation_id)
     } catch {
       setError('Failed to start conversation. Check your PHP server and config.')

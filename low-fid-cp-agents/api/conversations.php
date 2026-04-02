@@ -12,7 +12,7 @@ if ($action === 'list') {
 
     $sql    = '
         SELECT
-            c.id, c.role, c.topic, c.started_at, c.ended_at,
+            c.id, c.role, c.user_role, c.topic, c.started_at, c.ended_at,
             u.username,
             (
                 SELECT COUNT(*) FROM messages m
@@ -57,7 +57,7 @@ if ($action === 'get') {
     }
 
     $stmt = $db->prepare(
-        'SELECT c.*, u.username
+        'SELECT c.id, c.role, c.user_role, c.topic, c.started_at, c.ended_at, u.username
          FROM conversations c
          JOIN users u ON c.user_id = u.id
          WHERE c.id = ?

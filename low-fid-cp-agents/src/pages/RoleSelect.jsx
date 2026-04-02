@@ -32,7 +32,7 @@ export default function RoleSelect() {
         <div className="flex items-start justify-between mb-10">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <p className="text-green-500 text-xs font-semibold uppercase tracking-wider">Step 1 of 2</p>
+              <p className="text-green-500 text-xs font-semibold uppercase tracking-wider">Step 2 of 3</p>
               <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium">
                 {GROUP_NAMES[group]}
               </span>
@@ -43,8 +43,8 @@ export default function RoleSelect() {
             </p>
           </div>
           <div className="flex gap-2 flex-shrink-0">
-            <button onClick={() => navigate('/canvas')} className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-700 border border-green-200 rounded-lg hover:bg-green-50 transition-colors bg-white">
-              View History
+            <button onClick={() => navigate('/user-role')} className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-700 border border-green-200 rounded-lg hover:bg-green-50 transition-colors bg-white">
+              ← Back
             </button>
             <button onClick={logout} className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-700 border border-green-200 rounded-lg hover:bg-green-50 transition-colors bg-white">
               Sign Out

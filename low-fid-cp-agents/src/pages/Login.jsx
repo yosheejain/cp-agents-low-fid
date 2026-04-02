@@ -35,7 +35,7 @@ export default function Login() {
     const result = await login(username, password)
     setLoginLoading(false)
     if (result.success) {
-      navigate('/role')
+      navigate('/user-role')
     } else {
       setLoginError(result.error || 'Login failed')
     }

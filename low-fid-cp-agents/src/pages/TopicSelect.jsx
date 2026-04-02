@@ -35,7 +35,7 @@ export default function TopicSelect() {
         <div className="flex items-start justify-between mb-10">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <p className="text-green-500 text-xs font-semibold uppercase tracking-wider">Step 2 of 2</p>
+              <p className="text-green-500 text-xs font-semibold uppercase tracking-wider">Step 3 of 3</p>
               <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium">
                 {GROUP_NAMES[group]}
               </span>

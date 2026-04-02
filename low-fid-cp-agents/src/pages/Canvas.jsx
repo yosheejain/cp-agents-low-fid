@@ -4,8 +4,8 @@ import { useAuth } from '../contexts/AuthContext'
 import api from '../lib/api'
 import { LayoutDashboard, MessageSquare, X, Bot, User, Calendar } from 'lucide-react'
 
-const ROLE_LABELS  = { student: 'Student', instructor: 'Instructor', researcher: 'Researcher', professional: 'Professional', general: 'General User' }
-const TOPIC_LABELS = { computer_science: 'CS', mathematics: 'Math', writing: 'Writing', science: 'Science', history: 'History', arts: 'Arts', communication: 'Communication', general: 'General' }
+const ROLE_LABELS  = { student: 'Student', instructor: 'Instructor', researcher: 'Researcher', professional: 'Professional', general: 'General User', designer: 'Designer', product_manager: 'Product Manager', software_engineer: 'Software Engineer' }
+const TOPIC_LABELS = { computer_science: 'CS', mathematics: 'Math', writing: 'Writing', science: 'Science', history: 'History', arts: 'Arts', communication: 'Communication', general: 'General', database: 'Databases', privacy_and_security: 'Security & Privacy', llm: 'LLMs', ai: 'AI', ml: 'Machine Learning', comp_arch: 'Comp. Arch.' }
 
 function Badge({ label }) {
   return (
@@ -36,7 +36,8 @@ function ConversationModal({ convId, onClose }) {
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-slate-700 font-semibold text-sm">{data.conversation.username}</span>
-                  <Badge label={ROLE_LABELS[data.conversation.role] || data.conversation.role} />
+                  {data.conversation.user_role && <Badge label={`You: ${ROLE_LABELS[data.conversation.user_role] || data.conversation.user_role}`} />}
+                  <Badge label={`AI: ${ROLE_LABELS[data.conversation.role] || data.conversation.role}`} />
                   <Badge label={TOPIC_LABELS[data.conversation.topic] || data.conversation.topic} />
                 </div>
                 <p className="text-slate-400 text-xs mt-0.5">
@@ -115,7 +116,7 @@ export default function Canvas() {
           </div>
 
           <div className="flex gap-2">
-            <button onClick={() => navigate('/role')} className="px-3 py-1.5 text-xs font-semibold text-white bg-green-400 hover:bg-green-500 rounded-lg transition-colors">
+            <button onClick={() => navigate('/user-role')} className="px-3 py-1.5 text-xs font-semibold text-white bg-green-400 hover:bg-green-500 rounded-lg transition-colors">
               + New Chat
             </button>
             <button onClick={logout} className="px-3 py-1.5 text-xs text-slate-400 hover:text-slate-600 transition-colors">Sign Out</button>
@@ -151,7 +152,8 @@ export default function Canvas() {
               </div>
 
               <div className="flex flex-wrap gap-1.5 mb-2.5">
-                <Badge label={ROLE_LABELS[conv.role] || conv.role} />
+                {conv.user_role && <Badge label={`You: ${ROLE_LABELS[conv.user_role] || conv.user_role}`} />}
+                <Badge label={`AI: ${ROLE_LABELS[conv.role] || conv.role}`} />
                 <Badge label={TOPIC_LABELS[conv.topic] || conv.topic} />
               </div>
 

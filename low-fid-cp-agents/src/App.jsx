@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
+import UserRoleSelect from './pages/UserRoleSelect'
 import RoleSelect from './pages/RoleSelect'
 import TopicSelect from './pages/TopicSelect'
 import Chat from './pages/Chat'
@@ -13,6 +14,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/user-role" element={<ProtectedRoute><UserRoleSelect /></ProtectedRoute>} />
           <Route path="/role" element={<ProtectedRoute><RoleSelect /></ProtectedRoute>} />
           <Route path="/topic" element={<ProtectedRoute><TopicSelect /></ProtectedRoute>} />
           <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
