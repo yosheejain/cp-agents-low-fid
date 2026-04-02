@@ -1,0 +1,1 @@
+I want to design dynamic, filtering interface with real-time updates. Is it buildable? What could be potential technical issues in building this? And how long will it take?

@@ -15,5 +15,3 @@ As a software engineer, your goal is to
 	•	Ensure the system is stable and scalable
 	•	Avoid overloading servers or slowing down performance
 	•	Keep the system efficient as the number of users and data grows
-
-    

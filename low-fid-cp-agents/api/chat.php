@@ -45,7 +45,7 @@ if ($action === 'create_conversation') {
         'INSERT INTO messages (conversation_id, role, content) VALUES (?, "system", ?)'
     )->execute([$convId, $systemPrompt]);
 
-    // Seed opening message from file
+    // Seed opening messages from files
     $openingMessage = file_exists(OPENING_MESSAGE_FILE)
         ? trim(file_get_contents(OPENING_MESSAGE_FILE))
         : '';
@@ -53,6 +53,15 @@ if ($action === 'create_conversation') {
         $db->prepare(
             'INSERT INTO messages (conversation_id, role, content) VALUES (?, "assistant", ?)'
         )->execute([$convId, $openingMessage]);
+    }
+
+    $openingMessage2 = file_exists(OPENING_MESSAGE_2_FILE)
+        ? trim(file_get_contents(OPENING_MESSAGE_2_FILE))
+        : '';
+    if ($openingMessage2) {
+        $db->prepare(
+            'INSERT INTO messages (conversation_id, role, content) VALUES (?, "assistant", ?)'
+        )->execute([$convId, $openingMessage2]);
     }
 
     // Log this event
@@ -64,7 +73,7 @@ if ($action === 'create_conversation') {
         json_encode(['role' => $role, 'topic' => $topic]),
     ]);
 
-    jsonResponse(['success' => true, 'conversation_id' => $convId, 'opening_message' => $openingMessage]);
+    jsonResponse(['success' => true, 'conversation_id' => $convId, 'opening_message' => $openingMessage, 'opening_message_2' => $openingMessage2]);
 }
 
 // ── Send message ──────────────────────────────────────────────────────────────
