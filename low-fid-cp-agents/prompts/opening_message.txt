@@ -1,1 +1,17 @@
-I want to design dynamic, filtering interface with real-time updates. Is it buildable? What could be potential technical issues in building this? And how long will it take?
+Imagine you are working on a data dashboard for a job platform (e.g., similar to LinkedIn or Handshake analytics).
+
+Users (e.g., recruiters or hiring managers) can browse a live feed of candidates or applications coming in. New data is continuously added as candidates apply, update profiles, or interact with the platform.
+
+The designer wants to introduce a new feature:
+
+A dynamic filtering interface where users can filter candidates by attributes (e.g., skills, experience level, location), and see results update immediately as they adjust filters, even as new data is coming in.
+
+For example:
+	•	A recruiter applies filters such as skill (e.g., Python) and Years of professional experience (e.g., 3+ years)
+	•	As new candidates apply, they automatically appear in the filtered list
+	•	When the recruiter adjusts filters, results update instantly
+
+As a software engineer, your goal is to
+	•	Ensure the system is stable and scalable
+	•	Avoid overloading servers or slowing down performance
+	•	Keep the system efficient as the number of users and data grows
