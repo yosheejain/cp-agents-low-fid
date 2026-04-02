@@ -1,30 +1,37 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { GraduationCap, BookOpen, FlaskConical, Briefcase, Globe, Computer, PanelLeftOpen } from 'lucide-react'
+import { GraduationCap, BookOpen, FlaskConical, Briefcase, Globe } from 'lucide-react'
 
 // ── Edit group display names here ──────────────────────────────────────────────
 const GROUP_NAMES = { 1: 'Group 1', 2: 'Group 2' }
 
-// ── Edit roles per group here ──────────────────────────────────────────────────
-const ROLES_BY_GROUP = {
+// ── Edit user roles per group here ────────────────────────────────────────────
+const USER_ROLES_BY_GROUP = {
   1: [
-    { id: 'designer',      label: 'Designer',       description: '', Icon: PanelLeftOpen },
-    { id: 'product_manager',      label: 'Product Manager',       description: '', Icon: PanelLeftOpen },
+    { id: 'student',      label: 'Student',       description: 'I am learning or studying this topic',           Icon: GraduationCap },
+    { id: 'instructor',   label: 'Instructor',    description: 'I teach or create material on this topic',       Icon: BookOpen      },
+    { id: 'researcher',   label: 'Researcher',    description: 'I conduct research or analysis on this topic',   Icon: FlaskConical  },
+    { id: 'professional', label: 'Professional',  description: 'I apply this topic in a workplace context',      Icon: Briefcase     },
+    { id: 'general',      label: 'General User',  description: 'I am exploring this topic without a set agenda', Icon: Globe         },
   ],
   2: [
-    { id: 'software_engineer',      label: 'Software Engineer',       description: 'Developing software', Icon: Computer },
+    { id: 'student',      label: 'Student',       description: 'I am learning or studying this topic',           Icon: GraduationCap },
+    { id: 'instructor',   label: 'Instructor',    description: 'I teach or create material on this topic',       Icon: BookOpen      },
+    { id: 'researcher',   label: 'Researcher',    description: 'I conduct research or analysis on this topic',   Icon: FlaskConical  },
+    { id: 'professional', label: 'Professional',  description: 'I apply this topic in a workplace context',      Icon: Briefcase     },
+    { id: 'general',      label: 'General User',  description: 'I am exploring this topic without a set agenda', Icon: Globe         },
   ],
 }
 // ──────────────────────────────────────────────────────────────────────────────
 
-export default function RoleSelect() {
-  const { role, selectRole, user, logout } = useAuth()
+export default function UserRoleSelect() {
+  const { userRole, selectUserRole, user, logout } = useAuth()
   const navigate = useNavigate()
 
   const group = user?.group ?? 1
-  const roles = ROLES_BY_GROUP[group] ?? ROLES_BY_GROUP[1]
+  const roles = USER_ROLES_BY_GROUP[group] ?? USER_ROLES_BY_GROUP[1]
 
-  const handleSelect = (id) => { selectRole(id); navigate('/topic') }
+  const handleSelect = (id) => { selectUserRole(id); navigate('/role') }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 p-6">
@@ -32,14 +39,14 @@ export default function RoleSelect() {
         <div className="flex items-start justify-between mb-10">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <p className="text-green-500 text-xs font-semibold uppercase tracking-wider">Step 1 of 2</p>
+              <p className="text-green-500 text-xs font-semibold uppercase tracking-wider">Step 1 of 3</p>
               <span className="text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-medium">
                 {GROUP_NAMES[group]}
               </span>
             </div>
-            <h1 className="text-2xl font-bold text-slate-800">Select Interaction Role</h1>
+            <h1 className="text-2xl font-bold text-slate-800">What best describes you?</h1>
             <p className="text-slate-400 mt-1 text-sm">
-              Hi <span className="text-slate-600 font-medium">{user?.username}</span> — who do you want to talk to today?
+              Hi <span className="text-slate-600 font-medium">{user?.username}</span> — select your own role before choosing who to talk to.
             </p>
           </div>
           <div className="flex gap-2 flex-shrink-0">
@@ -54,7 +61,7 @@ export default function RoleSelect() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {roles.map(({ id, label, description, Icon }) => {
-            const selected = role === id
+            const selected = userRole === id
             return (
               <button
                 key={id}

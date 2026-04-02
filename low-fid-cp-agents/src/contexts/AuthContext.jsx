@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
     const saved = localStorage.getItem('chatapp_user')
     return saved ? JSON.parse(saved) : null
   })
+  const [userRole, setUserRoleState] = useState(() => localStorage.getItem('chatapp_user_role') || null)
   const [role, setRoleState] = useState(() => localStorage.getItem('chatapp_role') || null)
   const [topic, setTopicState] = useState(() => localStorage.getItem('chatapp_topic') || null)
 
@@ -40,11 +41,18 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     setUser(null)
+    setUserRoleState(null)
     setRoleState(null)
     setTopicState(null)
     localStorage.removeItem('chatapp_user')
+    localStorage.removeItem('chatapp_user_role')
     localStorage.removeItem('chatapp_role')
     localStorage.removeItem('chatapp_topic')
+  }, [])
+
+  const selectUserRole = useCallback((r) => {
+    setUserRoleState(r)
+    localStorage.setItem('chatapp_user_role', r)
   }, [])
 
   const selectRole = useCallback((r) => {
@@ -58,7 +66,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, role, topic, login, logout, selectRole, selectTopic }}>
+    <AuthContext.Provider value={{ user, userRole, role, topic, login, logout, selectUserRole, selectRole, selectTopic }}>
       {children}
     </AuthContext.Provider>
   )
