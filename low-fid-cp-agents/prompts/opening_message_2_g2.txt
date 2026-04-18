@@ -1,9 +1,9 @@
-Let me walk you through how the browser renders a webpage — specifically the critical rendering path.
+Hey, so I've been working on the real-time filtering feature for the recruiter dashboard. Here's where I'm at technically:
 
-When a browser receives an HTML document, it begins parsing it top-to-bottom into a DOM (Document Object Model) tree. At the same time, any linked CSS is parsed into a separate structure called the CSSOM (CSS Object Model). The browser then merges these two into a render tree, which only contains visible elements — for example, nodes with display: none are excluded.
+On the backend, I set up a WebSocket connection using Socket.IO so the server can push new candidate entries to the client the moment they hit the database, without the recruiter needing to refresh. For the filtering logic, I'm running queries against a PostgreSQL database with indexed columns on skills, experience level, and location — so filter updates trigger a new parameterized query and stream the results back through the socket.
 
-From the render tree, the browser runs layout (also called reflow): it calculates the exact position and size of every element on screen. Then it runs paint: it rasterizes each element — fills in pixels for text, colors, images, and borders. Finally, it composites the painted layers, often using the GPU, to produce the final frame you see.
+On the frontend, I have a React component that holds the active filters in state. Every time a filter changes, it emits a filter_update event to the server, which re-runs the query and pushes back the filtered results. New candidates that come in while filters are active get checked server-side against the current filter state before being pushed — so recruiters only see relevant entries in real time.
 
-One critical performance implication: JavaScript can block this entire pipeline. If the parser encounters a <script> tag, it halts HTML parsing until that script is downloaded and executed — unless the script has a defer or async attribute. This is why placing scripts at the bottom of <body>, or using defer, is a best practice.
+One thing I haven't figured out yet is how to handle the UI when a burst of new candidates comes in — right now it just appends them to the top of the list, which could be jarring. I also haven't thought through how the filter panel itself should be laid out or how much of this should be visible to the recruiter at once.
 
-What questions do you have?
+What are your thoughts on the design side?
