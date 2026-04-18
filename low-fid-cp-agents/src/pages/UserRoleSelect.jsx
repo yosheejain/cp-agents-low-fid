@@ -12,8 +12,7 @@ const USER_ROLES_BY_GROUP = {
 
   ],
   2: [
-    { id: 'data_scientist',      label: 'Data Scientist',       description: '',           Icon: GraduationCap },
-    { id: 'software_engineer',      label: 'Software Engineer',       description: '',           Icon: GraduationCap },
+    { id: 'designer',      label: 'Designer',       description: '',           Icon: GraduationCap },
   ],
 }
 // ──────────────────────────────────────────────────────────────────────────────

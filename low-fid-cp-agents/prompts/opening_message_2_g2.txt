@@ -1,0 +1,9 @@
+Let me walk you through how the browser renders a webpage — specifically the critical rendering path.
+
+When a browser receives an HTML document, it begins parsing it top-to-bottom into a DOM (Document Object Model) tree. At the same time, any linked CSS is parsed into a separate structure called the CSSOM (CSS Object Model). The browser then merges these two into a render tree, which only contains visible elements — for example, nodes with display: none are excluded.
+
+From the render tree, the browser runs layout (also called reflow): it calculates the exact position and size of every element on screen. Then it runs paint: it rasterizes each element — fills in pixels for text, colors, images, and borders. Finally, it composites the painted layers, often using the GPU, to produce the final frame you see.
+
+One critical performance implication: JavaScript can block this entire pipeline. If the parser encounters a <script> tag, it halts HTML parsing until that script is downloaded and executed — unless the script has a defer or async attribute. This is why placing scripts at the bottom of <body>, or using defer, is a best practice.
+
+What questions do you have?

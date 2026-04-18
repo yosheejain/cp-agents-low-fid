@@ -11,7 +11,7 @@ const TOPICS_BY_GROUP = {
     { id: 'web_dev', label: 'Web Development',      description: '',    Icon: Code2          },
   ],
   2: [
-    { id: 'llm', label: 'LLM',       description: 'Talks about databases and their use in software development',    Icon: Code2          },
+    { id: 'web_dev', label: 'Web Development', description: '', Icon: Code2 },
   ],
 }
 // ──────────────────────────────────────────────────────────────────────────────

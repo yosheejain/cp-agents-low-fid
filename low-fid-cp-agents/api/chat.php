@@ -23,9 +23,17 @@ if ($action === 'create_conversation') {
     $stmt->execute([$user['id'], $role, $topic, $userRole ?: null]);
     $convId = (int) $db->lastInsertId();
 
+    // Select prompt files based on user's group
+    $promptsDir = dirname(PROMPT_FILE);
+    $groupSuffix = ((int)($user['group_id'] ?? 1) === 2) ? '_g2' : '';
+
+    $promptFile   = $promptsDir . '/system_prompt' . $groupSuffix . '.txt';
+    $openingFile  = $promptsDir . '/opening_message' . $groupSuffix . '.txt';
+    $opening2File = $promptsDir . '/opening_message_2' . $groupSuffix . '.txt';
+
     // Build system prompt from base file; substitute placeholders
-    $promptTemplate = file_exists(PROMPT_FILE)
-        ? file_get_contents(PROMPT_FILE)
+    $promptTemplate = file_exists($promptFile)
+        ? file_get_contents($promptFile)
         : 'You are a helpful AI assistant.';
 
     $systemPrompt = str_replace(
@@ -35,7 +43,7 @@ if ($action === 'create_conversation') {
     );
 
     // Append role-specific prompt if one exists for this role
-    $rolePromptFile = dirname(PROMPT_FILE) . '/roles/' . preg_replace('/[^a-z0-9_]/', '', strtolower($role)) . '.txt';
+    $rolePromptFile = $promptsDir . '/roles/' . preg_replace('/[^a-z0-9_]/', '', strtolower($role)) . '.txt';
     if (file_exists($rolePromptFile)) {
         $systemPrompt .= "\n\n" . trim(file_get_contents($rolePromptFile));
     }
@@ -46,8 +54,8 @@ if ($action === 'create_conversation') {
     )->execute([$convId, $systemPrompt]);
 
     // Seed opening messages from files
-    $openingMessage = file_exists(OPENING_MESSAGE_FILE)
-        ? trim(file_get_contents(OPENING_MESSAGE_FILE))
+    $openingMessage = file_exists($openingFile)
+        ? trim(file_get_contents($openingFile))
         : '';
     if ($openingMessage) {
         $db->prepare(
@@ -55,8 +63,8 @@ if ($action === 'create_conversation') {
         )->execute([$convId, $openingMessage]);
     }
 
-    $openingMessage2 = file_exists(OPENING_MESSAGE_2_FILE)
-        ? trim(file_get_contents(OPENING_MESSAGE_2_FILE))
+    $openingMessage2 = file_exists($opening2File)
+        ? trim(file_get_contents($opening2File))
         : '';
     if ($openingMessage2) {
         $db->prepare(

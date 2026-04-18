@@ -11,7 +11,7 @@ const ROLES_BY_GROUP = {
     { id: 'designer',      label: 'Designer',       description: '', Icon: PanelLeftOpen },
   ],
   2: [
-    { id: 'software_engineer',      label: 'Software Engineer',       description: 'Developing software', Icon: Computer },
+    { id: 'software_engineer', label: 'Software Engineer', description: '', Icon: Computer },
   ],
 }
 // ──────────────────────────────────────────────────────────────────────────────
